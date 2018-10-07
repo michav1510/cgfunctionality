@@ -11,8 +11,8 @@
 #define PREDDEF
 
 #include<iostream>
-#include"Point2d.hpp"
-#include"Edge2d.hpp"
+#include"../basic/Point2d.hpp"
+#include"../basic/Edge2d.hpp"
 
 class Pred{
 	

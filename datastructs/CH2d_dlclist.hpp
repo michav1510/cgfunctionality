@@ -19,8 +19,8 @@
 #include <cmath>
 #include <vector>
 #include <stack>
-#include "Point2d.hpp"
-#include "Pred.hpp"
+#include "../basic/Point2d.hpp"
+#include "../preds/Pred.hpp"
 
 
 class CH2d_dlclist{

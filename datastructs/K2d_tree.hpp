@@ -16,7 +16,7 @@
 #include <cmath>
 #include <cassert>
 #include <stdexcept>   // for exception, runtime_error, out_of_range
-#include "Point2d.hpp"
+#include "../basic/Point2d.hpp"
 
 /**
  *   auxiliary functions that are used for sorting
