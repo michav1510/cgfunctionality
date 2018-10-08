@@ -20,7 +20,7 @@
 #include <vector>
 #include <stack>
 #include "../basic/Point2d.hpp"
-#include "../preds/Pred.hpp"
+#include "../preds/Predicates.hpp"
 
 
 class CH2d_dlclist{
@@ -317,8 +317,8 @@ public:
 						{
 							//doesn't have a sense to  check the angle if one of the points is the
 							//same with another
-							if( Pred::Orient(points[pos_next_cand],points[last_ch_pos],points[i]) > 0 || 
-							       (Pred::Orient(points[pos_next_cand],points[last_ch_pos],points[i]) == 0 &&
+							if( Predicates::getSignedOrientation(points[pos_next_cand],points[last_ch_pos],points[i]) > 0 || 
+							       (Predicates::getSignedOrientation(points[pos_next_cand],points[last_ch_pos],points[i]) == 0 &&
 							       Point2d::Distanceof2dPoints(points[last_ch_pos],points[pos_next_cand]) < 
 							       Point2d::Distanceof2dPoints(points[last_ch_pos],points[i])) )
 							{
@@ -528,7 +528,7 @@ public:
 			{
 				//if the query point is equal with one of the current points
 				return -1;
-			}else if( Pred::Orient(query_po,head->data,tail->data) == 0  &&
+			}else if( Predicates::getSignedOrientation(query_po,head->data,tail->data) == 0  &&
 				    (query_po.GetX() >= head->data.GetX() && query_po.GetX() <= tail->data.GetX()) &&
 				   (  (query_po.GetY() >= head->data.GetY() && query_po.GetY() <= tail->data.GetY()) || 
 					(query_po.GetY() >= tail->data.GetY()) && query_po.GetY() <= head->data.GetY()    ) )
@@ -536,7 +536,7 @@ public:
 				// if the query point is collinear with the other two and the query point is between the head
 				// and the tail then it will not be added to the list
 				return -1;
-			}else if( Pred::Orient(query_po,head->data,tail->data) == 0 ) 
+			}else if( Predicates::getSignedOrientation(query_po,head->data,tail->data) == 0 ) 
 			{
 				// the new element is collinear but it will be added to the list
 				Node* new_elem = new Node;
@@ -588,7 +588,7 @@ public:
 					// then the head must be substituted by the query point
 					Node* old_head = head;
 					head = new_elem;
-					if( Pred::Orient(query_po,old_head->data,tail->data) < 0 )
+					if( Predicates::getSignedOrientation(query_po,old_head->data,tail->data) < 0 )
 					{
 						// the front of the new head is the tail,
 						head->front = tail;
@@ -619,7 +619,7 @@ public:
 					// the the tail must be substituted 
 					Node* old_tail = tail;
 					tail = new_elem;
-					if( Pred::Orient(head->data,old_tail->data,query_po) < 0 )
+					if( Predicates::getSignedOrientation(head->data,old_tail->data,query_po) < 0 )
 					{
 						// then the front of the head is the new tail 
 						head->front = tail;
@@ -641,7 +641,7 @@ public:
 				}else
 				{
 					// then the nor the head nor the tail must be substituted
-					if( Pred::Orient(tail->data,head->data,query_po) > 0 )
+					if( Predicates::getSignedOrientation(tail->data,head->data,query_po) > 0 )
 					{
 						head->front = new_elem;
 						new_elem->back = head;
@@ -690,7 +690,7 @@ public:
 				Node* bef = head->back;
 				Node* aft = head->front;
 	
-				if( Pred::Orient(bef->data,new_head->data,head->data) > 0 )
+				if( Predicates::getSignedOrientation(bef->data,new_head->data,head->data) > 0 )
 				{
 					bef->front = new_head;
 					new_head->back = bef;
@@ -718,7 +718,7 @@ public:
 				Node* bef = tail->back;
 				Node* aft = tail->front;
 				
-				if( Pred::Orient(bef->data,new_tail->data,tail->data) > 0 )
+				if( Predicates::getSignedOrientation(bef->data,new_tail->data,tail->data) > 0 )
 				{
 					bef->front = new_tail;
 					new_tail->back = bef;
@@ -757,7 +757,7 @@ public:
 					{
 						//if after and prev are on the same vertical line then we don't want to add the 
 						//query point here because it will be added to the next iteration
-						if( Pred::Orient(prev->data,query_po,after->data) > 0 )
+						if( Predicates::getSignedOrientation(prev->data,query_po,after->data) > 0 )
 						{
 							//the second condition after || is for the case that the previous and the after 
 							//are at the same x coordinate, and we have three collinear points
@@ -790,7 +790,7 @@ public:
 					if( prev->data.GetX() != after->data.GetX() && 
 					    query_po.GetX() >= after->data.GetX() && query_po.GetX() <= prev->data.GetX() )
 					{
-						if( Pred::Orient(prev->data,query_po,after->data) > 0 )
+						if( Predicates::getSignedOrientation(prev->data,query_po,after->data) > 0 )
 						{
 							//the second condition after || is for the case that we have three collinear points
 							// and the query point is not between the other two points, thus it should be added
@@ -834,7 +834,7 @@ public:
 				curr = curr->front;
 				upp.push_back(curr);
 				int siz = upp.size();
-				while( siz > 2 && Pred::Orient(upp[siz-3]->data,upp[siz-2]->data,upp[siz-1]->data) <= 0 )
+				while( siz > 2 && Predicates::getSignedOrientation(upp[siz-3]->data,upp[siz-2]->data,upp[siz-1]->data) <= 0 )
 				{
 					//while the last three do not make a counter clockwise turn delete the middle
 					
@@ -857,7 +857,7 @@ public:
 				curr = curr->front;
 				low.push_back(curr);
 				int siz = low.size();
-				while( siz > 2 && Pred::Orient(low[siz-3]->data,low[siz-2]->data,low[siz-1]->data) <= 0 )
+				while( siz > 2 && Predicates::getSignedOrientation(low[siz-3]->data,low[siz-2]->data,low[siz-1]->data) <= 0 )
 				{
 					//while the last three do not make a counter clockwise turn delete the middle
 					
