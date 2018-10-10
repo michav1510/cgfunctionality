@@ -1,9 +1,11 @@
+#ifndef ORIENTATIONDEF
+#define ORIENTATIONDEF
+
 enum class Orientation
 {
 	Clockwise,
 	Count_Clockwise,
-	None
+	No_Orientation
 };
 
-
-
+#endif

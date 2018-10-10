@@ -1,23 +1,9 @@
-/**
- *  Purpose : To implement Predicates that we meet in computational geometry
- * 
- *  @author Chaviaras Michalis
- *  @version 1.1  2/2018
- * 
- */
+#include "Point2d.hpp"
+#include "Edge2d.hpp"
+#include "Orientation.hpp"
 
-
-#ifndef PREDICATESDEF
-#define PREDICATESDEF
-
-#include<iostream>
-#include"../basic/Point2d.hpp"
-#include"../basic/Edge2d.hpp"
-#include"../basic/Orientation.hpp"
-
-class Predicates{
-	
-	public:
+namespace preds
+{
 /**
  * @param p_1 the fir. point 
  * @param p_2 the sec. point
@@ -29,7 +15,7 @@ class Predicates{
  * @returns = 0 if the vector starts at p_2 and ends at p1 is collinear with the one that starts at point p_2 and ends at 
  * point p_3 
  */
-static double getSignedOrientation(const Point2d& p_1, const Point2d& p_2, const Point2d& p_3);
+double getSignedOrientation(const Point2d &p_1, const Point2d &p_2, const Point2d &p_3);
 
 /**
  * @param p_1 the fir. point 
@@ -42,8 +28,8 @@ static double getSignedOrientation(const Point2d& p_1, const Point2d& p_2, const
  * @returns "None" if the vector starts at p_2 and ends at p1 is collinear with the one that starts at point p_2 and ends at 
  * point p_3 
  */
-static Orientation getOrientation(const Point2d& p_1, const Point2d& p_2, const Point2d& p_3);	
-	
+Orientation getOrientation(const Point2d &p_1, const Point2d &p_2, const Point2d &p_3);
+
 /**
  * @param p1_x  x coordinate of the fir. point of the fir. edge 
  * @param p1_y  y coordinate of the fir. point of the fir. edge
@@ -55,8 +41,7 @@ static Orientation getOrientation(const Point2d& p_1, const Point2d& p_2, const 
  * @param p4_y  y coorindate of the sec. point of the sec. edge
  * @returns true if the edges intersect and false otherwise
 */
-static bool areEdgesIntersect(const double p1_x, const double p1_y, const double p2_x, const double p2_y, const double p3_x, const double p3_y, const double p4_x, const double p4_y);
-
+bool areEdgesIntersect(const double p1_x, const double p1_y, const double p2_x, const double p2_y, const double p3_x, const double p3_y, const double p4_x, const double p4_y);
 
 /**
  * @param p_1 fir. point of the fir. edge
@@ -65,21 +50,23 @@ static bool areEdgesIntersect(const double p1_x, const double p1_y, const double
  * @param p_4 sec. point of the sec. edge
  * @returns true if the edges intersect and false otherwise
  */
-static bool areEdgesIntersect(const Point2d& p_1, const Point2d& p_2, const Point2d& p_3, const Point2d& p_4);
-
+bool areEdgesIntersect(const Point2d &p_1, const Point2d &p_2, const Point2d &p_3, const Point2d &p_4);
 
 /**
  * @param ed_1 the fir. edge 
  * @param ed_2 the sec. edge
  * @returns true if the edges intersect and false otherwise
  */
-static bool areEdgesIntersect(const Edge2d& ed_1, const Edge2d& ed_2);
-	
-	
-};
-	
-	
-	
-#endif
-	
-	
+bool areEdgesIntersect(const Edge2d &ed_1, const Edge2d &ed_2);
+
+} // namespace preds
+
+namespace basecalc
+{
+/**
+	 * This friend-function calculate the distance between two points
+	 * @returns The distance of 2 Points2d
+	 */
+double Distanceof2dPoints(const Point2d p1, const Point2d p2);
+
+} // namespace basecalc
